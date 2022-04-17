@@ -1,1 +1,1 @@
-"# TurkceSozluk" 
+# TurkceSozluk
