@@ -1,13 +1,13 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import Box from './box';
+import Box from './box'
 
-const BoxCenter = styled(Box)({});
+const BoxCenter = styled(Box)({})
 
 BoxCenter.defaultProps = {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-};
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center'
+}
 
-export default BoxCenter;  
+export default BoxCenter

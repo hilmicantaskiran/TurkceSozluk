@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Svg, {Circle, Path} from 'react-native-svg';
+import * as React from 'react'
+import Svg, { Circle, Line } from 'react-native-svg'
 
-const SvgSearch = props => (
+const SvgSearch = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
+    width={24}
+    height={24}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -13,10 +13,11 @@ const SvgSearch = props => (
     strokeLinecap="round"
     strokeLinejoin="round"
     className=""
-    {...props}>
+    {...props}
+  >
     <Circle cx={11} cy={11} r={8} />
-    <Path d="m21 21-4.35-4.35" />
+    <Line x1={21} y1={21} x2={16.65} y2={16.65} />
   </Svg>
-);
+)
 
-export default SvgSearch;
+export default SvgSearch
