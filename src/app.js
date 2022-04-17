@@ -23,9 +23,12 @@ function SearchStack() {
 function App() {
     return (
         <NavigationContainer>
-            <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Navigator 
+                screenOptions={{ headerShown: false }}
+                initialRouteName="SearchStack"
+            >
                 <Tab.Screen name="Favorite" component={FavoriteView} />
-                <Tab.Screen name="Search" component={SearchStack} options={{headerShown: false}} />
+                <Tab.Screen name="SearchStack" component={SearchStack} />
                 <Tab.Screen name="History" component={HistoryView} />
             </Tab.Navigator>
         </NavigationContainer>  

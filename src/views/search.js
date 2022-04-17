@@ -1,12 +1,17 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
+
+import Box from '../components/box';
+import BoxCenter from '../components/box-center';
 
 function SearchView({navigation}) {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Ara</Text>
-            <Button title="Detay" onPress={() => navigation.navigate('Detail')} />
-        </View>
+        <BoxCenter>
+            <Pressable onPress={() => navigation.navigate('Detail')}>
+                <Text style={{ color: 'black' }}>Detay</Text>
+            </Pressable> 
+            <Box bg='blue' size={20} mt={20} />
+        </BoxCenter>
     );
 }
 

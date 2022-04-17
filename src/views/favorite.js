@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 function FavoriteView() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Favoriler</Text>
+            <Text style={{ color: 'black' }}>Favoriler</Text>
         </View>
     );
 }

@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 function DetailView() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Detay</Text>
+            <Text style={{ color: 'black' }}>Detay</Text>
         </View>
     );
 }

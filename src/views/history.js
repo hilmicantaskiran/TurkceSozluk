@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 function HistoryView() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Arama Geçmiş</Text>
+            <Text style={{ color: 'black' }}>Arama Geçmişi</Text>
         </View>
     );
 }
