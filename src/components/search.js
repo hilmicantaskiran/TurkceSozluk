@@ -13,20 +13,8 @@ function SearchBox({onChangeFocus}) {
   const [isFocus, setFocus] = React.useState(false)
 
   React.useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      onChangeFocus(true)
-      setFocus(true)
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      onChangeFocus(false)
-      setFocus(false)
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+    onChangeFocus(isFocus)
+  }, [isFocus, onChangeFocus]) 
 
   const onCancel = () => {
     setFocus(false)
