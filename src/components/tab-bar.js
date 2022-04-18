@@ -6,7 +6,16 @@ import { Search, Bookmark, RotateCcw } from '../components/icons'
 
 function BottomTabBar({ state, descriptors, navigation }) {
   return (
-    <Box flexDirection="row" bg="white">
+    <Box 
+      flexDirection="row" 
+      bg="white"
+      style={{
+        shadowColor: "#000",
+        shadowOpacity: 0.2,
+        shadowRadius: 20,
+        elevation: 5
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key]
         const label =
@@ -26,13 +35,19 @@ function BottomTabBar({ state, descriptors, navigation }) {
           })
 
           if (!isFocused && !event.defaultPrevented) {
-            // The `merge: true` option makes sure that the params inside the tab screen are preserved
+            // The `merge: true` opti on makes sure that the params inside the tab screen are preserved
             navigation.navigate({ name: route.name, merge: true })
           }
         }
 
         return label === 'SearchStack' ? (
-          <Box key={label} p={15} mt={-15} bg="white" borderRadius="full">
+          <Box
+            key={label} 
+            p={15} 
+            mt={-15} 
+            bg="white"
+            borderRadius="full"
+          >
             <Button
               size={56}
               bg="red"
@@ -51,13 +66,23 @@ function BottomTabBar({ state, descriptors, navigation }) {
             pt={6}
             onPress={onPress}
           >
-            {label === 'Favorite' && <Bookmark stroke={theme.colors.textLight} />}
-            {label === 'History' && <RotateCcw stroke={theme.colors.textLight} />}
+            {label === 'Favorite' && (
+              <Bookmark 
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
+            )}
+            {label === 'History' && (
+              <RotateCcw 
+                color={isFocused ? theme.colors.red : theme.colors.textLight}
+              />
+            )}
+
+            {/* indicator */}
             <Box
               size={3}
-              bg={isFocused ? 'red' : 'white    '}
+              bg={isFocused ? 'red' : 'white'}
               mt={6}
-              rounded="full"
+              borderRadius="full"
             />
           </Button>
         )

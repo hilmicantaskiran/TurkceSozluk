@@ -12,7 +12,8 @@ const colors = {
   atasozleriLight: '#F9F5F1',
   textDark: '#0A151F',
   textMedium: '#48515B',
-  textLight: '#758291'
+  textLight: '#758291',
+  white: '#FFFFFF',
 }
 
 const radii = {

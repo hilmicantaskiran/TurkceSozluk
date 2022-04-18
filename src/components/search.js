@@ -8,10 +8,26 @@ import Button from './button'
 import theme from '../utils/theme'
 import { CloseCircle, Search } from './icons'
 
-function SearchBox() {
+function SearchBox({onChangeFocus}) {
   const [value, setValue] = React.useState('')
   const [isFocus, setFocus] = React.useState(false)
-  
+
+  React.useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      onChangeFocus(true)
+      setFocus(true)
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      onChangeFocus(false)
+      setFocus(false)
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   const onCancel = () => {
     setFocus(false)
     Keyboard.dismiss()
@@ -33,6 +49,7 @@ function SearchBox() {
             },
             shadowOpacity: 0.1,
             shadowRadius: 24,
+            elevation: 2,
           }}
           bg="white"
           color="textDark"
@@ -40,7 +57,7 @@ function SearchBox() {
           height={52}
           value={value}
           borderWidth={1}
-          borderColor={isFocus ? "#D1D1D1" : "transparent"} 
+          borderColor={isFocus ? "#D1D1D1" : "transparent"}
           borderRadius="normal"
           placeholder="Türkçe Sözlük'te Ara"
           placeholderTextColor="textMedium"
