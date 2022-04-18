@@ -1,26 +1,37 @@
 import React from 'react'
-import { Text } from 'react-native'
 
 import theme from '../utils/theme'
+
+import Box from '../components/box'
+import Text from '../components/text'
 import Button from '../components/button'
-import BoxCenter from '../components/box-center'
+import Search from '../components/search'
+
 import { TdkLogo } from '../components/icons'
 
 function SearchView({ navigation }) {
   return (
-    <BoxCenter>
+    <Box>
       <Button
         width={80}
         height={40}
         bg="red"
-        mb={20}
+        mt={20}
+        alignSelf="center"
         borderRadius="normal"
         onPress={() => navigation.navigate('Detail')}
       >
-        <Text style={{ color: 'white' }}>Detay</Text>
+        <Text color="white">Detay</Text>
       </Button>
-      <TdkLogo color={theme.colors.red} />
-    </BoxCenter>
+
+      <Box py={20} alignSelf="center">
+        <TdkLogo color={theme.colors.red} />
+      </Box>
+
+      <Box p={5}>
+        <Search />
+      </Box>
+    </Box>
   )
 }
 
