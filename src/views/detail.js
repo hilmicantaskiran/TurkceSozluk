@@ -1,11 +1,23 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { StatusBar } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useFocusEffect } from '@react-navigation/native'
+
+import Box from '../components/box'
+import Text from '../components/text'
 
 function DetailView() {
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBarStyle('dark-content')
+      Platform.OS === 'android' && StatusBar.setBackgroundColor('#f8f9fa')
+    }, [])
+  ) 
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: 'black' }}>Detay</Text>
-    </View>
+    <Box flex={1} as={SafeAreaView} justifyContent='center' alignItems='center'>
+      <Text color='black'>Detay</Text>
+    </Box>
   )
 }
 

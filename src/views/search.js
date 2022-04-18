@@ -1,31 +1,48 @@
 import React from 'react'
-import { ImageBackground, StatusBar, Animated, LogBox } from 'react-native'
+import { StatusBar, Animated, LogBox, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFocusEffect } from '@react-navigation/native'
 
 import theme from '../utils/theme'
-import bg from '../assets/images/bg.jpg'
 
 import Box from '../components/box'
 import Text from '../components/text'
 import Search from '../components/search'
+import Background from '../components/bg'
+import { CardContainer, CardSummary, CardTitle } from '../components/card'
 
 import { TdkLogo } from '../components/icons'
 
-function SearchView() {
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Başlık 1',
+    summary: 'Açıklama 1'
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Başlık 2',
+    summary: 'Açıklama 2'
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Başlık 3',
+    summary: 'Açıklama 3'
+  }
+]
+
+function SearchView({navigation}) {
   const [heroHeight] = React.useState(new Animated.Value(285))
   const [isSearchFocus, setSearchFocus] = React.useState(false)
 
   React.useEffect(() => {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']) /* ignore Animated useNativeDriver warning to avoid log spam */
     if (isSearchFocus) {
-      console.log(heroHeight)
       Animated.timing(heroHeight, {
         toValue: 84,
         duration: 300
       }).start()
     } else {
-      console.log(heroHeight)
       Animated.timing(heroHeight, {
         toValue: 285,
         duration: 300
@@ -44,15 +61,11 @@ function SearchView() {
     <Box as={SafeAreaView} bg={isSearchFocus ? "softRed" : "red"} flex={1}>
       <Box as={Animated.View} position="relative" zIndex={1} height={heroHeight}>
         { !isSearchFocus && (
-          <Box 
-            as={ImageBackground} 
-            source={bg} 
-            style={{ width: '100%', height: '100%' }}
-          >
+          <Background>
             <Box flex={1} justifyContent='center' alignItems='center'>
               <TdkLogo color={theme.colors.white} />
             </Box>
-          </Box>
+          </Background>
         )}
         <Box 
           position="absolute"
@@ -65,7 +78,7 @@ function SearchView() {
           <Search onChangeFocus={status => setSearchFocus(status)} />
         </Box>
       </Box>
-      <Box flex={1} bg="white" p={isSearchFocus ? 0 : 26}>
+      <Box flex={1} bg="softRed" pt={isSearchFocus ? 0 : 26}>
         { isSearchFocus ? (
           <Box flex={1} p={16}>
             <Text color="textDark"> 
@@ -73,10 +86,36 @@ function SearchView() {
             </Text>
           </Box>
         ) : (
-          <Box flex={1} p={16}>
-            <Text color="textDark"> 
-              öneriler
-            </Text>
+          <Box flex={1} px={16} py={40}>
+            <Box>
+              <Text color="textLight">Bir deyim</Text>
+              <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+                <CardTitle>on para</CardTitle>
+                <CardSummary>çok az (para).</CardSummary>
+              </CardContainer>
+            </Box>
+
+            <Box mt={40}>
+              <Text color="textLight">Bir deyim - Atasözü</Text>
+              <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+                <CardTitle>siyem siyem ağlamak</CardTitle>
+                <CardSummary>hafif hafif, ince ince, durmadan gözyaşı dökmek.</CardSummary>
+              </CardContainer>
+            </Box>
+            {/*
+            <FlatList
+              data={DATA}
+              renderItem={({ item }) => (
+                <Box py={5}>
+                  <CardContainer>
+                    <CardTitle>{item.title}</CardTitle>
+                    <CardSummary>{item.summary}</CardSummary>
+                  </CardContainer>
+                </Box>
+              )}
+              keyExtractor={item => item.id}
+            />
+            */}
           </Box>
         )}
       </Box>

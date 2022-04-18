@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFocusEffect } from '@react-navigation/native'
 
 import Box from '../components/box'
+import Text from '../components/text'
 
 function HistoryView() {
   useFocusEffect(
@@ -15,7 +16,7 @@ function HistoryView() {
 
   return (
     <Box flex={1} as={SafeAreaView} justifyContent='center' alignItems='center'>
-      <Text style={{ color: 'black' }}>Arama Geçmişi</Text>
+      <Text color='black'>Arama geçmişi</Text>
     </Box>
   )
 }
