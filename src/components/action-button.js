@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Button from './button'
-import Text from '../components/text'
+import Text from './text'
 
 function ActionButton({ children, ...props }) {
     return (

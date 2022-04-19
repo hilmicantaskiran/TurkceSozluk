@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Box from '../components/box'
-import Text from '../components/text'
+import Box from './box'
+import Text from './text'
 
 export function DetailSummaryItemContainer({ children, border, radiusTop, radiusBottom, ...props }) {
     return (

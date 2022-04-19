@@ -1,7 +1,7 @@
 import React from 'react'
 import { ImageBackground } from 'react-native'
 
-import Box from '../components/box'
+import Box from './box'
 import bg from '../assets/images/bg.jpg'
 
 function Background({ children, ...props }) {

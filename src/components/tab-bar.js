@@ -1,11 +1,10 @@
 import React from 'react'
-import { Keyboard } from 'react-native'
 
 import theme from '../utils/theme'
 
-import Box from '../components/box'
-import Button from '../components/button'
-import { Search, Bookmark, History } from '../components/icons'
+import Box from './box'
+import Button from './button'
+import { Search, Bookmark, History } from './icons'
 
 function BottomTabBar({ state, descriptors, navigation }) {
   return (
