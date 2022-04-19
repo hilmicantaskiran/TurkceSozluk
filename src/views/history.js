@@ -6,16 +6,18 @@ import { useFocusEffect } from '@react-navigation/native'
 import Box from '../components/box'
 import Text from '../components/text'
 
+import theme from '../utils/theme'
+
 function HistoryView() {
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBarStyle('dark-content')
-      Platform.OS === 'android' && StatusBar.setBackgroundColor('#f8f9fa')
+      Platform.OS === 'android' && StatusBar.setBackgroundColor(theme.colors.softRed)
     }, [])
   ) 
 
   return (
-    <Box flex={1} as={SafeAreaView} justifyContent='center' alignItems='center'>
+    <Box flex={1} as={SafeAreaView} justifyContent='center' alignItems='center' bg="softRed">
       <Text color='black'>Arama geçmişi</Text>
     </Box>
   )

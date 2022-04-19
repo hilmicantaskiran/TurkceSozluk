@@ -2,7 +2,7 @@ import React from 'react'
 import theme from '../utils/theme'
 import Box from '../components/box'
 import Button from '../components/button'
-import { Search, Bookmark, RotateCcw } from '../components/icons'
+import { Search, Bookmark, History } from '../components/icons'
 
 function BottomTabBar({ state, descriptors, navigation }) {
   return (
@@ -72,7 +72,7 @@ function BottomTabBar({ state, descriptors, navigation }) {
               />
             )}
             {label === 'History' && (
-              <RotateCcw 
+              <History 
                 color={isFocused ? theme.colors.red : theme.colors.textLight}
               />
             )}

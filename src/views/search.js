@@ -45,23 +45,23 @@ function SearchView({navigation}) {
       // bg-opacity
       Animated.timing(bgOpacity, {
         toValue: 0,
-        duration: 300
+        duration: 230
       }).start()
       // hero-height
       Animated.timing(heroHeight, {
         toValue: 84,
-        duration: 300
+        duration: 230
       }).start()
     } else {
       // bg-opacity
       Animated.timing(bgOpacity, {
         toValue: 1,
-        duration: 300
+        duration: 230
       }).start()
       // hero-height
       Animated.timing(heroHeight, {
         toValue: HERO_HEIGHT,
-        duration: 300
+        duration: 230
       }).start()
     }
   }, [heroHeight, bgOpacity, isSearchFocus])
@@ -117,7 +117,7 @@ function SearchView({navigation}) {
           <Box flex={1} px={16} py={40}>
             <Box>
               <Text color="textLight">Bir deyim</Text>
-              <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+              <CardContainer mt={10} onPress={() => navigation.navigate('Detail', {title: 'on para'})}>
                 <CardTitle>on para</CardTitle>
                 <CardSummary>çok az (para).</CardSummary>
               </CardContainer>
@@ -125,7 +125,7 @@ function SearchView({navigation}) {
 
             <Box mt={40}>
               <Text color="textLight">Bir deyim - Atasözü</Text>
-              <CardContainer mt={10} onPress={() => navigation.navigate('Detail')}>
+              <CardContainer mt={10} onPress={() => navigation.navigate('Detail', {title: 'siyem siyem ağlamak'})}>
                 <CardTitle>siyem siyem ağlamak</CardTitle>
                 <CardSummary>hafif hafif, ince ince, durmadan gözyaşı dökmek.</CardSummary>
               </CardContainer>

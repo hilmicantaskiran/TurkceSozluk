@@ -10,7 +10,10 @@ import DetailView from './views/detail'
 import FavoriteView from './views/favorite'
 import HistoryView from './views/history'
 
+import Button from './components/button'
 import BottomTabBar from './components/tab-bar'
+
+import { Left, More } from './components/icons'
 
 import theme from './utils/theme'
 
@@ -19,9 +22,37 @@ const Stack = createNativeStackNavigator()
 
 function SearchStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Search" component={SearchView} />
-      <Stack.Screen name="Detail" component={DetailView} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Search"
+        component={SearchView}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailView}
+        options={({ route, navigation }) => ({
+          title: (route.params && route.params.title) || 'boş',
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: theme.colors.softRed,
+          },
+          headerTitleStyle: {
+            color: theme.colors.textMedium,
+            textAliign: 'center',
+          },
+          headerLeft: () => (
+            <Button pr={20} height='100%' onPress={() => navigation.navigate('Search')}>
+              <Left color={theme.colors.textMedium} />
+            </Button>
+          ),
+          headerRight: () => (
+            <Button pl={20} height='100%' onPress={() => navigation.navigate('Search')}>
+              <More color={theme.colors.textMedium} />
+            </Button>
+          ),
+        })}
+      />
     </Stack.Navigator>
   )
 }

@@ -1,5 +1,7 @@
 export { default as Bookmark } from './Bookmark'
 export { default as CloseCircle } from './CloseCircle'
-export { default as RotateCcw } from './RotateCcw'
+export { default as History } from './History'
+export { default as Left } from './Left'
+export { default as More } from './More'
 export { default as Search } from './Search'
 export { default as TdkLogo } from './TdkLogo'
