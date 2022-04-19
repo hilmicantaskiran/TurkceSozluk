@@ -10,6 +10,7 @@ import Text from '../components/text'
 import Search from '../components/search'
 import Background from '../components/bg'
 import { CardContainer, CardSummary, CardTitle } from '../components/card'
+import { SimpleCardContainer, SimpleCardTitle } from '../components/simple-card'
 
 import { TdkLogo } from '../components/icons'
 
@@ -31,24 +32,39 @@ const DATA = [
   }
 ]
 
+const HERO_HEIGHT = 230
+
 function SearchView({navigation}) {
-  const [heroHeight] = React.useState(new Animated.Value(285))
+  const [bgOpacity] = React.useState(new Animated.Value(1))
+  const [heroHeight] = React.useState(new Animated.Value(HERO_HEIGHT))
   const [isSearchFocus, setSearchFocus] = React.useState(false)
 
   React.useEffect(() => {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']) /* ignore Animated useNativeDriver warning to avoid log spam */
     if (isSearchFocus) {
+      // bg-opacity
+      Animated.timing(bgOpacity, {
+        toValue: 0,
+        duration: 300
+      }).start()
+      // hero-height
       Animated.timing(heroHeight, {
         toValue: 84,
         duration: 300
       }).start()
     } else {
+      // bg-opacity
+      Animated.timing(bgOpacity, {
+        toValue: 1,
+        duration: 300
+      }).start()
+      // hero-height
       Animated.timing(heroHeight, {
-        toValue: 285,
+        toValue: HERO_HEIGHT,
         duration: 300
       }).start()
     }
-  }, [heroHeight, isSearchFocus])
+  }, [heroHeight, bgOpacity, isSearchFocus])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,13 +76,13 @@ function SearchView({navigation}) {
   return (
     <Box as={SafeAreaView} bg={isSearchFocus ? "softRed" : "red"} flex={1}>
       <Box as={Animated.View} position="relative" zIndex={1} height={heroHeight}>
-        { !isSearchFocus && (
+        <Box as={Animated.View} opacity={bgOpacity}>
           <Background>
             <Box flex={1} justifyContent='center' alignItems='center'>
               <TdkLogo color={theme.colors.white} />
             </Box>
           </Background>
-        )}
+        </Box>
         <Box 
           position="absolute"
           left={0}
@@ -80,10 +96,22 @@ function SearchView({navigation}) {
       </Box>
       <Box flex={1} bg="softRed" pt={isSearchFocus ? 0 : 26}>
         { isSearchFocus ? (
-          <Box flex={1} p={16}>
-            <Text color="textDark"> 
-              geçmiş aramalar
-            </Text>
+          <Box flex={1}>
+            <FlatList
+              data={DATA}
+              style={{ padding: 16 }}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <Box py={6}>
+                  <SimpleCardContainer>
+                    <SimpleCardTitle>{item.title}</SimpleCardTitle>
+                  </SimpleCardContainer>
+                </Box>
+              )}
+              ListHeaderComponent={
+                <Text color="textLight" mb={10}>Son Aramalar</Text>
+              }
+            />
           </Box>
         ) : (
           <Box flex={1} px={16} py={40}>
@@ -102,20 +130,6 @@ function SearchView({navigation}) {
                 <CardSummary>hafif hafif, ince ince, durmadan gözyaşı dökmek.</CardSummary>
               </CardContainer>
             </Box>
-            {/*
-            <FlatList
-              data={DATA}
-              renderItem={({ item }) => (
-                <Box py={5}>
-                  <CardContainer>
-                    <CardTitle>{item.title}</CardTitle>
-                    <CardSummary>{item.summary}</CardSummary>
-                  </CardContainer>
-                </Box>
-              )}
-              keyExtractor={item => item.id}
-            />
-            */}
           </Box>
         )}
       </Box>

@@ -9,7 +9,6 @@ export function CardContainer({ children, ...props }) {
     <Button
       bg='white'
       borderRadius="normal"
-      shadow='sm'
       px={12}
       py={16}
       {...props}
