@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, Animated, LogBox, FlatList } from 'react-native'
+import { StatusBar, Animated, LogBox, FlatList, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFocusEffect } from '@react-navigation/native'
 
@@ -38,6 +38,17 @@ function SearchView({navigation}) {
   const [bgOpacity] = React.useState(new Animated.Value(1))
   const [heroHeight] = React.useState(new Animated.Value(HERO_HEIGHT))
   const [isSearchFocus, setSearchFocus] = React.useState(false)
+  const [homeData, setHomeData] = React.useState(null)
+
+  const getHomeData = async () => {
+    const response = await fetch('https://sozluk.gov.tr/icerik')
+    const data = await response.json()
+    setHomeData(data)
+  }
+
+  React.useEffect(() => {
+    getHomeData()
+  }, [])
 
   React.useEffect(() => {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']) /* ignore Animated useNativeDriver warning to avoid log spam */
@@ -76,7 +87,7 @@ function SearchView({navigation}) {
   return (
     <Box as={SafeAreaView} bg={isSearchFocus ? "softRed" : "red"} flex={1}>
       <Box as={Animated.View} position="relative" zIndex={1} height={heroHeight}>
-        <Box as={Animated.View} opacity={bgOpacity}>
+        <Box as={Animated.View} style={{ opacity: bgOpacity }}>
           <Background>
             <Box flex={1} justifyContent='center' alignItems='center'>
               <TdkLogo color={theme.colors.white} />
@@ -116,18 +127,31 @@ function SearchView({navigation}) {
         ) : (
           <Box flex={1} px={16} py={40}>
             <Box>
-              <Text color="textLight">Bir deyim</Text>
+              <Text color="textLight">Bir Kelime</Text>
               <CardContainer mt={10} onPress={() => navigation.navigate('Detail', {title: 'on para'})}>
-                <CardTitle>on para</CardTitle>
-                <CardSummary>çok az (para).</CardSummary>
+                { homeData ? (
+                  <>
+                    <CardTitle>{ homeData?.kelime[0].madde }</CardTitle>
+                    <CardSummary>{ homeData?.kelime[0].anlam }</CardSummary>
+                  </>
+                ) : (
+                  <ActivityIndicator size="large" color={theme.colors.textLight} />
+                )}
+                  
               </CardContainer>
             </Box>
 
             <Box mt={40}>
-              <Text color="textLight">Bir deyim - Atasözü</Text>
+              <Text color="textLight">Bir Deyim - Atasözü</Text>
               <CardContainer mt={10} onPress={() => navigation.navigate('Detail', {title: 'siyem siyem ağlamak'})}>
-                <CardTitle>siyem siyem ağlamak</CardTitle>
-                <CardSummary>hafif hafif, ince ince, durmadan gözyaşı dökmek.</CardSummary>
+                { homeData ? (
+                  <>
+                    <CardTitle>{ homeData?.atasoz[0].madde }</CardTitle>
+                    <CardSummary>{ homeData?.atasoz[0].anlam }</CardSummary>
+                  </>
+                ) : (
+                  <ActivityIndicator size="large" color={theme.colors.textLight} />
+                )}
               </CardContainer>
             </Box>
           </Box>

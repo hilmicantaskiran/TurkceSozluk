@@ -32,7 +32,7 @@ function SearchStack() {
         name="Detail"
         component={DetailView}
         options={({ route, navigation }) => ({
-          title: (route.params && route.params.title) || 'boş',
+          title: (route.params?.title),
           headerShadowVisible: false,
           headerStyle: {
             backgroundColor: theme.colors.softRed,
