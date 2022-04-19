@@ -62,14 +62,14 @@ function SearchView({navigation}) {
             <SuggestionCard
               data={ homeData?.kelime[0] } 
               title={ 'Bir Kelime' }
-              onPress={() => navigation.navigate('Detail', {title: homeData?.kelime[0].madde})}
+              onPress={() => navigation.navigate('Detail', {title: 'Detay', keyword: homeData?.kelime[0].madde})}
             />
 
             <SuggestionCard 
               mt={40}
               data={ homeData?.atasoz[0] } 
               title={ 'Bir Deyim - Atasözü' }
-              onPress={() => navigation.navigate('Detail', {title: homeData?.atasoz[0].madde})}
+              onPress={() => navigation.navigate('Detail', {title: "Atasözleri ve Deyimler", keyword: homeData?.atasoz[0].madde})}
             />
           </Box>
         )}
