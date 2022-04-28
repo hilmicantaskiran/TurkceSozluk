@@ -1,5 +1,6 @@
 import React from 'react'
 import { Keyboard } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Box from './box'
 import Input from './input'
@@ -8,7 +9,7 @@ import Button from './button'
 import theme from '../utils/theme'
 import { CloseCircle, Search } from './icons'
 
-function SearchBox({onChangeFocus}) {
+function SearchBox({ navigation, onChangeFocus, onSubmitEditing }) {
   const [value, setValue] = React.useState('')
   const [isFocus, setFocus] = React.useState(false)
 
@@ -18,10 +19,49 @@ function SearchBox({onChangeFocus}) {
 
   const onCancel = () => {
     setFocus(false)
+    setValue('')
     Keyboard.dismiss()
   }
 
   const onClear = () => {
+    setValue('')
+  }
+
+  const onSubmitted = text => {
+    storeSearched(text)
+
+    navigation.navigate('Detail', {
+      title: 'Detay',
+      keyword: text,
+    })
+  }
+
+  const storeSearched = async value => {
+    console.log('storeSearched', value)
+    try {
+      const data = await AsyncStorage.getItem('@searched')
+
+      if (data) {
+        const parsedData = JSON.parse(data)
+        const mergedData = [value, ...parsedData]
+
+        if (mergedData.length > 5) {
+          mergedData.pop()
+        }
+
+        await AsyncStorage.setItem('@searched', JSON.stringify(mergedData)).then(
+          () => {
+            onSubmitEditing()
+          },
+        )
+        
+      } else {
+        await AsyncStorage.setItem('@searched', JSON.stringify([value]))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
     setValue('')
   }
 
@@ -51,6 +91,7 @@ function SearchBox({onChangeFocus}) {
           placeholderTextColor="textMedium"
           onFocus={() => setFocus(true)}
           onChangeText={text => setValue(text)}
+          onSubmitEditing={event => onSubmitted(event.nativeEvent.text)}
         />
 
         { value.length > 0 && (

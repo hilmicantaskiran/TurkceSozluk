@@ -1,7 +1,8 @@
 import React from 'react'
-import { StatusBar, LogBox } from 'react-native'
+import { StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFocusEffect } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Box from '../components/box'
 import SuggestionCard from '../components/suggestion-card'
@@ -28,9 +29,20 @@ const DATA = [
   }
 ]
 
-function SearchView({navigation}) {
+function SearchView({ navigation }) {
   const [isSearchFocus, setSearchFocus] = React.useState(false)
   const [homeData, setHomeData] = React.useState(null)
+  const [searchHistory, setSearchHistory] = React.useState([])
+
+  const getSearched = async () => {
+    try {
+      const data = await AsyncStorage.getItem('@searched')
+      const parsedData = JSON.parse(data) || []
+      setSearchHistory(parsedData)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const getHomeData = async () => {
     const response = await fetch('https://sozluk.gov.tr/icerik')
@@ -39,37 +51,59 @@ function SearchView({navigation}) {
   }
 
   React.useEffect(() => {
+    getSearched()
     getHomeData()
-  }, [])
+  }, [setSearchHistory, setHomeData])
 
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBarStyle(isSearchFocus ? 'dark-content' : 'light-content')
-      Platform.OS === 'android' && StatusBar.setBackgroundColor(isSearchFocus ? theme.colors.softRed : theme.colors.red)
+      Platform.OS === 'android' &&
+        StatusBar.setBackgroundColor(
+          isSearchFocus ? theme.colors.softRed : theme.colors.red
+        )
     }, [isSearchFocus])
   )
 
   return (
-    <Box as={SafeAreaView} bg={isSearchFocus ? "softRed" : "red"} flex={1}>
-      <HomeSearch isSearchFocus={isSearchFocus} onSearchFocus={setSearchFocus} />
+    <Box as={SafeAreaView} bg={isSearchFocus ? 'softRed' : 'red'} flex={1}>
+      <HomeSearch
+        navigation={navigation}
+        isSearchFocus={isSearchFocus}
+        onSearchFocus={setSearchFocus}
+        onSubmitEditing={getSearched}
+      />
       <Box flex={1} bg="softRed" pt={isSearchFocus ? 0 : 26}>
-        { isSearchFocus ? (
+        {isSearchFocus ? (
           <Box flex={1}>
-            <SearchHistoryList data={DATA} />
+            <SearchHistoryList
+              navigation={navigation}
+              data={searchHistory}
+            />
           </Box>
         ) : (
           <Box flex={1} px={16} py={40}>
             <SuggestionCard
-              data={ homeData?.kelime[0] } 
-              title={ 'Bir Kelime' }
-              onPress={() => navigation.navigate('Detail', {title: 'Detay', keyword: homeData?.kelime[0].madde})}
+              data={homeData?.kelime[0]}
+              title={'Bir Kelime'}
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  title: 'Detay',
+                  keyword: homeData?.kelime[0].madde
+                })
+              }
             />
 
-            <SuggestionCard 
+            <SuggestionCard
               mt={40}
-              data={ homeData?.atasoz[0] } 
-              title={ 'Bir Deyim - Atasözü' }
-              onPress={() => navigation.navigate('Detail', {title: "Atasözleri ve Deyimler", keyword: homeData?.atasoz[0].madde})}
+              data={homeData?.atasoz[0]}
+              title={'Bir Deyim - Atasözü'}
+              onPress={() =>
+                navigation.navigate('Detail', {
+                  title: 'Atasözleri ve Deyimler',
+                  keyword: homeData?.atasoz[0].madde
+                })
+              }
             />
           </Box>
         )}

@@ -11,7 +11,7 @@ import DetailSummaryItem from '../components/detail-summary-item'
 
 import theme from '../utils/theme'
 
-import { Hand, Voice, FavSolid, Bookmark } from '../components/icons'
+import { Hand, Voice, Bookmark } from '../components/icons'
 
 function DetailView({ route }) {
   const keyword = route.params?.keyword

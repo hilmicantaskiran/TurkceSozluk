@@ -11,7 +11,12 @@ import theme from '../utils/theme'
 
 const HERO_HEIGHT = 230
 
-function HomeSearch({ isSearchFocus, onSearchFocus }) {
+function HomeSearch({
+  navigation,
+  isSearchFocus,
+  onSearchFocus,
+  onSubmitEditing
+}) {
   const [bgOpacity] = React.useState(new Animated.Value(1))
   const [heroHeight] = React.useState(new Animated.Value(HERO_HEIGHT))
 
@@ -61,7 +66,11 @@ function HomeSearch({ isSearchFocus, onSearchFocus }) {
         width="100%"
         p={16}
       >
-        <Search onChangeFocus={(status) => onSearchFocus(status)} />
+        <Search
+          navigation={navigation}
+          onSubmitEditing={onSubmitEditing}
+          onChangeFocus={(status) => onSearchFocus(status)}
+        />
       </Box>
     </Box>
   )

@@ -17,9 +17,9 @@ export function SimpleCardContainer({ children, ...props }) {
   )
 }
 
-export function SimpleCardTitle({ children, ...props }) {
+export function SimpleCardTitle({ children }) {
   return (
-    <Text fontSize={16} fontWeight="bold" color="black" {...props}>
+    <Text fontSize={16} fontWeight="bold" color="black">
       {children}
     </Text>
   )
